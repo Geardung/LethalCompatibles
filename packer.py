@@ -90,3 +90,5 @@ class ModpackLoader():
         with ZipFile("./modpacks/"+ name + ".zip", "r") as zfile:
             
             zfile.extractall(self._main_config["path_to_game"])
+        
+        os.system('cls' if os.name=='nt' else 'clear')
