@@ -87,9 +87,7 @@ class ModpackLoader():
         
         if os.path.exists(self._main_config["path_to_game"]+"/BepInEx"): shutil.rmtree(self._main_config["path_to_game"]+"/BepInEx")
         
-        with ZipFile("./modpacks/"+ name + ".zip", "r") as zfile:
-            
-            zfile.extractall(self._main_config["path_to_game"])
+        with ZipFile("./modpacks/"+ name + ".zip", "r") as zfile: zfile.extractall(self._main_config["path_to_game"])
         
         print("""
               ⡶⠶⠂⠐⠲⠶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⡶⠶⡶⣶
@@ -105,6 +103,6 @@ class ModpackLoader():
               ⠸⠤⠽⠠⠽⠁⣴⠧⠼⣧⠤⠟⠀⠀⠈⠧⣤⠤⠸⠉⠁⠞⠒⠳⠀⠸⠀⠸⠧⠼
               """)
         
-        input("Сборка установлена, нажмите пробел...")
+        input("Сборка установлена, нажмите Enter...")
         
         return
