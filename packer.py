@@ -115,7 +115,7 @@ class ModpackLoader():
               ⠸⠤⠽⠠⠽⠁⣴⠧⠼⣧⠤⠟⠀⠀⠈⠧⣤⠤⠸⠉⠁⠞⠒⠳⠀⠸⠀⠸⠧⠼
               """)
         import subprocess
-        subprocess.run("cmd /c start steam://run/413150")
+        subprocess.run("cmd /c start steam://run/1966720")
         input("Сборка установлена, нажмите Enter...")
         
         return
