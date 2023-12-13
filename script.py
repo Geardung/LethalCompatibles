@@ -3,6 +3,7 @@ from ftplib import FTP
 
 config = {
     "path_to_game": "Z:\SteamLibrary\steamapps\common\Lethal Company",
+    "now_version": "0.2"
 }
 
 width = 35
@@ -83,6 +84,9 @@ def select_menu(server_modpacks):
 
 def create_modpack_menu():
     
+    import psutil
+    "LethalCompany.exe" in (p.name() for p in psutil.process_iter())
+
     from packer import ModpackLoader
     
     instance = ModpackLoader(now_server["ip"],
@@ -157,6 +161,16 @@ if __name__ == "__main__":
             f.write(ujson.dumps(config, ensure_ascii=True, encode_html_chars=True))
     else:
         print("- Присутствует")
+        with open("./configs/main.json", "r", encoding="utf-8") as f:
+            
+            exists_json = ujson.loads(f.read())
+        exists_json:dict
+        
+        print("Проверяем, нужно ли обновление зависимостей?")
+        if float(exists_json.get("now_version", "0.1")) < float(config["now_version"]):
+            print("= Версия новая, обновляем зависимости")
+            os.system("py -m pip install -r reqs.txt")
+        
             
     
     if not os.path.exists("./configs/176.119.156.94.json"):
