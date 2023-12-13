@@ -3,7 +3,7 @@ from ftplib import FTP
 
 config = {
     "path_to_game": "Z:\SteamLibrary\steamapps\common\Lethal Company",
-    "now_version": "0.2"
+    "now_version": "0.3"
 }
 
 width = 80

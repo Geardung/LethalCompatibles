@@ -52,6 +52,7 @@ class ModpackLoader():
             
             for file_n_dir in os.listdir(self._main_config["path_to_game"] + "/BepInEx"):
                 print("| " + file_n_dir)
+                if file_n_dir.endswith(".log"): continue
                 if os.path.isfile(self._main_config["path_to_game"] + "/BepInEx" + "/" + file_n_dir): myzip.write(self._main_config["path_to_game"] + "/BepInEx/" + file_n_dir, "BepInEx/" + file_n_dir)
                 else: add_in_zip_dir(self._main_config["path_to_game"] + "/BepInEx" + "/" + file_n_dir, "/BepInEx/" + file_n_dir, myzip)
                 time.sleep(0.35)
@@ -113,7 +114,8 @@ class ModpackLoader():
               ⢰⣒⡒⠰⡄⡴⠀⡶⢲⡆⢢⣀⡖⠀⠀⡖⠒⠲⢰⠒⣦⢀⡶⡄⠒⢲⠒⢲⣆⣀
               ⠸⠤⠽⠠⠽⠁⣴⠧⠼⣧⠤⠟⠀⠀⠈⠧⣤⠤⠸⠉⠁⠞⠒⠳⠀⠸⠀⠸⠧⠼
               """)
-        
+        import subprocess
+        subprocess.run("cmd /c start steam://run/413150")
         input("Сборка установлена, нажмите Enter...")
         
         return
