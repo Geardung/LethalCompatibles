@@ -85,7 +85,19 @@ def select_menu(server_modpacks):
 def create_modpack_menu():
     
     import psutil
-    "LethalCompany.exe" in (p.name() for p in psutil.process_iter())
+    if "Lethal Company.exe" in (p.name() for p in psutil.process_iter()):
+        
+        print("Пока LethalCompany запущена, я не смогу собрать сборку :(")
+        if input("Завершить процесс? [Yes/No]: ").lower().startswith("y"):
+            
+            parent = [p for p in psutil.process_iter() if p.name() == "Lethal Company.exe"][0]
+            
+            
+            #parent = psutil.Process([p.pid for p in psutil.process_iter() if p.name == "Lethal Company.exe"][0])
+            for child in parent.children(recursive=True):  # or parent.children() for recursive=False
+                child.kill()
+            parent.kill()
+        else: return cls()
 
     from packer import ModpackLoader
     
@@ -103,6 +115,21 @@ def install_modpack_menu(server_modpacks):
         time.sleep(1.5)
         return select_menu(server_modpacks)
     
+    import psutil
+    if "Lethal Company.exe" in (p.name() for p in psutil.process_iter()):
+        
+        print("Пока LethalCompany запущена, я не смогу собрать сборку :(")
+        if input("Завершить процесс? [Yes/No]: ").lower().startswith("y"):
+            
+            parent = [p for p in psutil.process_iter() if p.name() == "Lethal Company.exe"][0]
+            
+            
+            #parent = psutil.Process([p.pid for p in psutil.process_iter() if p.name == "Lethal Company.exe"][0])
+            for child in parent.children(recursive=True):  # or parent.children() for recursive=False
+                child.kill()
+            parent.kill()
+        else: return cls()
+        
     a = ""
     
     while True:
@@ -170,6 +197,12 @@ if __name__ == "__main__":
         if float(exists_json.get("now_version", "0.1")) < float(config["now_version"]):
             print("= Версия новая, обновляем зависимости")
             os.system("py -m pip install -r reqs.txt")
+            
+            with open("./configs/main.json", "w", encoding="utf-8") as f:
+                exists_json.setdefault("now_version", config["now_version"])
+                f.write(ujson.dumps(exists_json, ensure_ascii=True, encode_html_chars=True))
+                f.close()
+            
         
             
     
