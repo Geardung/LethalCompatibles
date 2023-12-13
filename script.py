@@ -108,14 +108,20 @@ def install_modpack_menu(server_modpacks):
             from packer import ModpackLoader
             if a == "0": select_menu(server_modpacks)
             
-            if a in server_modpacks: ModpackLoader(now_server["ip"],
+            if a in server_modpacks: 
+                ModpackLoader(now_server["ip"],
                              now_server["user"],
                              now_server["password"]).install_modpack(a)
+                select_menu(server_modpacks)
             
-            elif int(a)-1 in range(len(server_modpacks)): ModpackLoader(now_server["ip"],
-                             now_server["user"],
-                             now_server["password"]).install_modpack(server_modpacks[int(a)-1])
-        
+            elif int(a)-1 in range(len(server_modpacks)): 
+                ModpackLoader(now_server["ip"],
+                              now_server["user"],
+                              now_server["password"]).install_modpack(server_modpacks[int(a)-1])
+                select_menu(server_modpacks)
+
+            
+            
         print("#"+"".center(width, "=")+"#")
         print("#"+" Выбор модпака ".center(width, "=")+"#")
         print("#"+"".center(width, "=")+"#")
