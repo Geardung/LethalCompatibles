@@ -18,6 +18,11 @@ class ModpackLoader():
     def create_n_upload_new_modpack(self):
         
         name = self.pack_now_modpack()
+        os.system('cls' if os.name=='nt' else 'clear')
+        print("На данный момент не поддерживается загрузка на сервер...\nПолученный архив " + name + ".zip в папке modpacks отправьте Санёчку, чтобы он загрузил вручную его")
+        input("Для продолжения, нажмите Enter...")
+        os.system('cls' if os.name=='nt' else 'clear')
+        return
         self.upload_modpack_on_server(name)
     
     def pack_now_modpack(self, name: str = str(int(datetime.datetime.now().timestamp()))):

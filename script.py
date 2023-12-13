@@ -6,7 +6,7 @@ config = {
     "now_version": "0.2"
 }
 
-width = 35
+width = 80
 
 server_config = {
     "label": "Санин сервер",
@@ -67,16 +67,20 @@ def select_menu(server_modpacks):
             
             if a == "1": install_modpack_menu(server_modpacks)
             elif a == "2": create_modpack_menu()
-        
+                   
         print("#"+"".center(width, "=")+"#")
-        print("#"+" Меню синхронайзера ".center(width, "=")+"#")
+        print("#"+"  _        _   _         _    ___                      _   _ _    _         ".center(width, " ")+"#")
+        print("#"+" | |   ___| |_| |_  __ _| |  / __|___ _ __  _ __  __ _| |_(_) |__| |___ ___ ".center(width, " ")+"#")
+        print("#"+" | |__/ -_)  _| ' \/ _` | | | (__/ _ \ '  \| '_ \/ _` |  _| | '_ \ / -_|_-< ".center(width, " ")+"#")
+        print("#"+" |____\___|\__|_||_\__,_|_|  \___\___/_|_|_| .__/\__,_|\__|_|_.__/_\___/__/ ".center(width, " ")+"#")
+        print("#"+"                                           |_|                              ".center(width, " ")+"#")
         print("#"+"".center(width, "=")+"#")
         print("#"+"".center(width, "-")+"#")
-        print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, "-")+"#")
-        print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, "-")+"#")
+        print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, " ")+"#")
+        print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
-        print("#"+" 1. Установить модпак ".center(width, "-")+"#")
-        print("#"+" 2. Опубликовать модпак ".center(width, "-")+"#")
+        print("#"+" 1. Установить модпак ".center(width, " ")+"#")
+        print("#"+" 2. Опубликовать модпак ".center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
         print("#"+"".center(width, "=")+"#")
         
@@ -151,21 +155,23 @@ def install_modpack_menu(server_modpacks):
                               now_server["password"]).install_modpack(server_modpacks[int(a)-1])
                 select_menu(server_modpacks)
 
-            
-            
         print("#"+"".center(width, "=")+"#")
-        print("#"+" Выбор модпака ".center(width, "=")+"#")
+        print("#"+"  __  __         _               _       ".center(width, " ")+"#")
+        print("#"+" |  \/  |___  __| |_ __  __ _ __| |__ ___".center(width, " ")+"#")
+        print("#"+" | |\/| / _ \/ _` | '_ \/ _` / _| / /(_-<".center(width, " ")+"#")
+        print("#"+" |_|  |_\___/\__,_| .__/\__,_\__|_\_\/__/".center(width, " ")+"#")
+        print("#"+"                  |_|                    ".center(width, " ")+"#")
         print("#"+"".center(width, "=")+"#")
         print("#"+"".center(width, "-")+"#")
-        print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, "-")+"#")
-        print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, "-")+"#")
+        print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, " ")+"#")
+        print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
         for ind, modpack in enumerate(server_modpacks):
-            print("#"+ (" "+str(ind+1)+". " + modpack +" ").center(width, "-")+"#")
+            print("#"+ (" "+str(ind+1)+". " + modpack +" ").center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
         print("#"+"".center(width, "=")+"#")
         
-        a = input("Введите модпак для скачки (\"0\" чтобы назад): ")
+        a = input("\nВведите модпак для скачки (\"0\" чтобы назад): ")
 
 
 
