@@ -1,5 +1,6 @@
-import os, ujson, time, datetime
+import os, ujson, time
 from ftplib import FTP
+
 config = {
     "path_to_game": "Z:\SteamLibrary\steamapps\common\Lethal Company",
 }
