@@ -85,7 +85,13 @@ class ModpackLoader():
         download([("http://" + self._server_ip + "/modpacks/"+ name + ".zip")],
                  dest_dir="./modpacks")
         
-        if os.path.exists(self._main_config["path_to_game"]+"/BepInEx"): shutil.rmtree(self._main_config["path_to_game"]+"/BepInEx")
+        def on_deletion_error(lstat, path, exc_info):
+            
+            print("Программа не смогла самостоятельно очистить папку BepInEx'a\nСделайте это самостоятельно, удалив " + self._main_config["path_to_game"]+"/BepInEx")
+            
+            while os.path.exists(self._main_config["path_to_game"]+"/BepInEx"): input("Нажмите Enter, если вы удалили папку...")
+        
+        if os.path.exists(self._main_config["path_to_game"]+"/BepInEx"): shutil.rmtree(self._main_config["path_to_game"]+"/BepInEx", onerror=on_deletion_error)
         
         with ZipFile("./modpacks/"+ name + ".zip", "r") as zfile: zfile.extractall(self._main_config["path_to_game"])
         
