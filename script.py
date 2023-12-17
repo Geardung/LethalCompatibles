@@ -1,9 +1,8 @@
-import os, ujson, time, paramiko
-from ftplib import FTP
+import os, ujson, time
 
 config = {
     "path_to_game": "Z:\SteamLibrary\steamapps\common\Lethal Company",
-    "now_version": "0.4"
+    "now_version": "0.5"
 }
 
 width = 80
@@ -19,28 +18,8 @@ server_config = {
 }
 
 server_modpacks: list[str]
-
 now_server: dict[str, str]
-
 servers:list[server_config] = []
-
-
-
-
-def let_comp_path_input():
-    while True:
-        
-        print("Вам необходимо ввести полный путь до корневой папки Lethal Company")
-        a = input("\n: ")
-        if os.path.exists(a + "/Lethal Company.exe"):
-            config["path_to_game"] = a
-            return a
-        print("Путь не существует, попробуйте снова")
-
-def select_server():
-    while True:
-        
-        os.system("clear")
 
 def connect_to_server(hz: dict):
     print("Устанавливаем соединение с " + hz["ip"])
@@ -194,7 +173,15 @@ if __name__ == "__main__":
         print("- Отсутствует. Инициализируем новый")
         
         with open("./configs/main.json", "w", encoding="utf-8") as f:
-            let_comp_path_input()
+            while True:
+                
+                print("Вам необходимо ввести полный путь до корневой папки Lethal Company")
+                a = input("\n: ")
+                if os.path.exists(a + "/Lethal Company.exe"):
+                    config["path_to_game"] = a
+                    break
+                print("Путь не существует, попробуйте снова")
+                
             f.write(ujson.dumps(config, ensure_ascii=True, encode_html_chars=True))
     else:
         print("- Присутствует")

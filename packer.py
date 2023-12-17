@@ -30,7 +30,7 @@ class ModpackLoader():
         while True:
             a = input(f"Название модпака [Enter чтобы - {name}]: ")
             if a == "": break
-            elif not re.search('[a-zA-Z]', a) or " " in a:
+            elif not (re.search('[ЁёА-я]', a)) and not(" " in a):
                 name = a
                 break
             else: print(f"Имя пака [{a}] содержит пробел либо нелатинские символы...")
@@ -78,10 +78,12 @@ class ModpackLoader():
         print("Создаём соединение с сервером...")
         with ftplib.FTP(self._server_ip) as session:
             session.login(user=self._user, passwd=self._password)
+            session.cwd("modpacks")
         
             print("Подключились!\nПроверяем наличие модпака с схожим названием...")
-            if name + ".zip" in session.nlst():
-                if input("Сборка с таким названием уже существует\nПерезаписать? [Yes/No]").lower()[0] == "y": session.delete("./modpacks/" + name + ".zip")
+            
+            if name in [x[0:-4] for x in session.nlst("") if x.endswith(".zip")]:
+                if input("Сборка с таким названием уже существует\nПерезаписать? [Yes/No]: ").lower()[0] == "y": session.delete("/home/lethal/modpacks/" + name + ".zip")
                 else: return
             else: print("Отлично! Модпака с таким названием нет")
         
