@@ -1,9 +1,9 @@
-import os, ujson, time
+import os, ujson, time, paramiko
 from ftplib import FTP
 
 config = {
     "path_to_game": "Z:\SteamLibrary\steamapps\common\Lethal Company",
-    "now_version": "0.3"
+    "now_version": "0.4"
 }
 
 width = 80
@@ -45,9 +45,11 @@ def select_server():
 def connect_to_server(hz: dict):
     print("Устанавливаем соединение с " + hz["ip"])
     
-    with FTP(hz["ip"]) as ftp:
+    from ftplib import FTP
+    
+    with FTP(host=hz["ip"]) as ftp:
         
-        ftp.login()
+        ftp.login(hz["user"], hz["password"])
         ftp.cwd("modpacks")
         all_files = ftp.nlst()
         print(all_files, ftp.pwd())
@@ -66,7 +68,9 @@ def select_menu(server_modpacks):
         if a.isdigit():
             
             if a == "1": install_modpack_menu(server_modpacks)
-            elif a == "2": create_modpack_menu()
+            elif a == "2": 
+                
+                server_modpacks.append(create_modpack_menu())
                    
         print("#"+"".center(width, "=")+"#")
         print("#"+"  _        _   _         _    ___                      _   _ _    _         ".center(width, " ")+"#")
@@ -109,7 +113,7 @@ def create_modpack_menu():
                              now_server["user"],
                              now_server["password"])
     
-    instance.create_n_upload_new_modpack()
+    return instance.create_n_upload_new_modpack()
 
 def install_modpack_menu(server_modpacks):
     a = "0"
@@ -185,7 +189,7 @@ if __name__ == "__main__":
     
     print("Проверка главного конфига")
     
-    if not os.path.exists("./configs/main.json"): 
+    if not os.path.exists("./configs/main.json") or open("./configs/main.json", "r", encoding="utf-8").read() == "": 
         
         print("- Отсутствует. Инициализируем новый")
         
@@ -194,18 +198,17 @@ if __name__ == "__main__":
             f.write(ujson.dumps(config, ensure_ascii=True, encode_html_chars=True))
     else:
         print("- Присутствует")
-        with open("./configs/main.json", "r", encoding="utf-8") as f:
-            
-            exists_json = ujson.loads(f.read())
-        exists_json:dict
+        
+        exists_json:dict = ujson.loads(open("./configs/main.json", "r", encoding="utf-8").read())
         
         print("Проверяем, нужно ли обновление зависимостей?")
+        
         if float(exists_json.get("now_version", "0.1")) < float(config["now_version"]):
             print("= Версия новая, обновляем зависимости")
             os.system("py -m pip install -r reqs.txt")
             
             with open("./configs/main.json", "w", encoding="utf-8") as f:
-                exists_json.setdefault("now_version", config["now_version"])
+                exists_json.__setattr__("now_version", config["now_version"])
                 f.write(ujson.dumps(exists_json, ensure_ascii=True, encode_html_chars=True))
                 f.close()
             
@@ -236,7 +239,7 @@ if __name__ == "__main__":
                     "port": f.get("port", 21),
                     
                     "user": f.get("user", "lethal"),
-                    "password": f.get("kiragay", "Default label"),
+                    "password": f.get("password", "kiragay"),
                 })
 
     if len(servers) == 0: print("Конфигов серверов нема, попробуйте удалить папку configs, чтобы синициализировался основной сервер")

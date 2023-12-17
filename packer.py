@@ -1,4 +1,4 @@
-import os, datetime, ujson, time, ftplib, shutil
+import os, datetime, ujson, time, ftplib, shutil, re
 from zipfile import ZipFile
 
 
@@ -8,8 +8,8 @@ class ModpackLoader():
         
         if not os.path.exists("./modpacks"): os.makedirs("./modpacks")
         
-        self.version = "0.1"
         self._server_ip: str = ip
+        
         self._user:str = user
         self._password:str = password
         
@@ -18,16 +18,22 @@ class ModpackLoader():
     def create_n_upload_new_modpack(self):
         
         name = self.pack_now_modpack()
-        os.system('cls' if os.name=='nt' else 'clear')
-        print("На данный момент не поддерживается загрузка на сервер...\nПолученный архив " + name + ".zip в папке modpacks отправьте Санёчку, чтобы он загрузил вручную его")
-        input("Для продолжения, нажмите Enter...")
-        os.system('cls' if os.name=='nt' else 'clear')
-        return
+        
         self.upload_modpack_on_server(name)
+        
+        return name
     
     def pack_now_modpack(self, name: str = str(int(datetime.datetime.now().timestamp()))):
         
         os.system('cls' if os.name=='nt' else 'clear')
+        
+        while True:
+            a = input(f"Название модпака [Enter чтобы - {name}]: ")
+            if a == "": break
+            elif not re.search('[a-zA-Z]', a) or " " in a:
+                name = a
+                break
+            else: print(f"Имя пака [{a}] содержит пробел либо нелатинские символы...")
         
         print("Начинаем создавать модпак: " + name)
         
@@ -43,6 +49,7 @@ class ModpackLoader():
             
             for file_n_dir in os.listdir(full_dir):
                 print("| " + local_dir + "/" + file_n_dir)
+                if file_n_dir.endswith(".log"): continue
                 if os.path.isfile(full_dir + "/" + file_n_dir): zip.write(full_dir + "/" + file_n_dir, local_dir + "/" + file_n_dir)
                 else: add_in_zip_dir(full_dir + "/" + file_n_dir, local_dir + "/" + file_n_dir, zip)
             
@@ -70,7 +77,7 @@ class ModpackLoader():
     def upload_modpack_on_server(self, name):
         print("Создаём соединение с сервером...")
         with ftplib.FTP(self._server_ip) as session:
-            session.login()
+            session.login(user=self._user, passwd=self._password)
         
             print("Подключились!\nПроверяем наличие модпака с схожим названием...")
             if name + ".zip" in session.nlst():
