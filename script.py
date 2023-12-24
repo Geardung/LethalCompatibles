@@ -58,13 +58,11 @@ def select_menu(server_modpacks):
         print("#"+" |____\___|\__|_||_\__,_|_|  \___\___/_|_|_| .__/\__,_|\__|_|_.__/_\___/__/ ".center(width, " ")+"#")
         print("#"+"                                           |_|                              ".center(width, " ")+"#")
         print("#"+"".center(width, "=")+"#")
-        print("#"+"".center(width, "-")+"#")
         print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, " ")+"#")
         print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
         print("#"+" 1. Установить модпак ".center(width, " ")+"#")
         print("#"+" 2. Опубликовать модпак ".center(width, " ")+"#")
-        print("#"+"".center(width, "-")+"#")
         print("#"+"".center(width, "=")+"#")
         
         a = input("\nВыберите действие: ")
@@ -145,13 +143,11 @@ def install_modpack_menu(server_modpacks):
         print("#"+" |_|  |_\___/\__,_| .__/\__,_\__|_\_\/__/".center(width, " ")+"#")
         print("#"+"                  |_|                    ".center(width, " ")+"#")
         print("#"+"".center(width, "=")+"#")
-        print("#"+"".center(width, "-")+"#")
         print("#"+(" Модпак сервер: " + now_server["label"]+" ").center(width, " ")+"#")
         print("#"+(" Модпаков: "+str(len(server_modpacks))+" ").center(width, " ")+"#")
         print("#"+"".center(width, "-")+"#")
         for ind, modpack in enumerate(server_modpacks):
             print("#"+ (" "+str(ind+1)+". " + modpack +" ").center(width, " ")+"#")
-        print("#"+"".center(width, "-")+"#")
         print("#"+"".center(width, "=")+"#")
         
         a = input("\nВведите модпак для скачки (\"0\" чтобы назад): ")
@@ -229,6 +225,10 @@ if __name__ == "__main__":
                     "password": f.get("password", "kiragay"),
                 })
 
+    ###
+    ###
+    ###
+    
     if len(servers) == 0: print("Конфигов серверов нема, попробуйте удалить папку configs, чтобы синициализировался основной сервер")
     elif len(servers) == 1:
         print("Так-как сервер всего один, то подключаемся к нему...")
