@@ -53,7 +53,7 @@ class ModpackLoader():
                 if os.path.isfile(full_dir + "/" + file_n_dir): zip.write(full_dir + "/" + file_n_dir, local_dir + "/" + file_n_dir)
                 else: add_in_zip_dir(full_dir + "/" + file_n_dir, local_dir + "/" + file_n_dir, zip)
             
-        with ZipFile("./modpacks/" + name + ".zip", "w", compression=2) as myzip:
+        with ZipFile("./modpacks/" + name + ".zip", "w") as myzip:
             print("Начинаем упаковывать модпак в ./modpacks/" + name + ".zip")
             myzip.setpassword("Geardung".encode("utf-8"))
             
